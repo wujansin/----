@@ -4,7 +4,7 @@
 #include "code_convert.h"
 #include <sys/stat.h>
 #include <fcntl.h>
-
+#define TEST_FILE "test.txt"
 
 void main(void)
 {
@@ -34,14 +34,14 @@ void main(void)
     
     //從文字檔讀取內容, 列印文字內容
     struct stat sb;
-    FILE *fp = fopen("test.txt", "r");
+    FILE *fp = fopen(TEST_FILE, "r");
     if(fp == NULL)
     {
         printf("File open error!\n");
         return;
     } 
     
-    int fd = open("test.txt", O_RDONLY);
+    int fd = open(TEST_FILE, O_RDONLY);
     if (fd == -1) {
         perror("open");
         exit(EXIT_FAILURE);
@@ -54,7 +54,7 @@ void main(void)
 
     char *buf = (char *)malloc(sb.st_size);
     fread(buf, 1, 1024, fp);
-    printf("buf =%s\n", buf); 
+    printf("file content =%s\n", buf); 
   
 
     //從文字檔讀取數字內容, 數字用逗號分隔, 取出數字,存入byte buffer
@@ -78,6 +78,5 @@ void main(void)
     free(buf);
     free(byte);
     fclose(fp);
-    
-    
+
 }
