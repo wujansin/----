@@ -54,7 +54,30 @@ void main(void)
 
     char *buf = (char *)malloc(sb.st_size);
     fread(buf, 1, 1024, fp);
-    printf("buf = %s \n", buf); 
-    free(buf);
+    printf("buf =%s\n", buf); 
+  
 
+    //從文字檔讀取數字內容, 數字用逗號分隔, 取出數字,存入byte buffer
+    char *token = strtok(buf, ",");
+    int i = 0;
+    unsigned char *byte = (unsigned char *)malloc(1024);
+    unsigned char sbyte;
+    while(token != NULL)
+    {        
+        HexStr2Byte(token, &sbyte, 1);
+        byte[i] = sbyte;
+        token = strtok(NULL, ",");
+        i++;
+    }
+    printf("byte = ");
+    for(int j = 0; j < i; j++)
+    {
+        printf("0x%02X ", byte[j]);
+    }
+    printf("\n");
+    free(buf);
+    free(byte);
+    fclose(fp);
+    
+    
 }
